@@ -1,0 +1,23 @@
+integrator               = md
+dt                       = 0.002
+nsteps                   = 500000         ; 1 ns simulation
+
+nstlist                  = 10
+cutoff-scheme            = Verlet
+ns_type                  = grid
+coulombtype              = PME
+rcoulomb                 = 1.0
+rvdw                     = 1.0
+
+tcoupl                   = V-rescale
+tau-t                    = 0.1ps           ; Time constant for temperature coupling (ps)
+ref-t                    = 300K            ; Reference temperature (K)
+tc-grps                  = Protein_chain_A SOL ; Temperature coupling groups (replace with actual group name)
+constraints              = h-bonds        ; Apply constraints for hydrogen bonds only
+constraint-algorithm     = lincs          ; Algorithm for bond constraints
+lincs-order              = 4              ; Highest order in the expansion of the constraint coupling matrix
+lincs-iter               = 1              ; Number of iterations to correct bond lengths
+
+nstxout                  = 1000
+nstvout                  = 1000
+nstenergy                = 1000
