@@ -1,0 +1,44 @@
+; npt.mdp - used as input into grompp for NPT equilibration
+
+title                    = NPT Equilibration
+define                   = -DPOSRES        ; Position restrain the protein
+integrator               = md              ; Algorithm (md = molecular dynamics)
+dt                       = 0.002           ; Time step in ps (2 fs)
+nsteps                   = 50000           ; Number of steps (100 ps)
+nstxout                  = 1000            ; Save coordinates every 2 ps
+nstvout                  = 1000            ; Save velocities every 2 ps
+nstenergy                = 1000            ; Save energies every 2 ps
+nstlog                   = 1000            ; Update the log file every 2 ps
+
+continuation             = yes             ; Restarting after NVT
+constraint_algorithm     = lincs           ; Algorithm for constraints
+constraints              = all-bonds       ; All bonds (even heavy atom-H bonds) constrained
+lincs_iter               = 1               ; Number of iterations to correct for rotational lengthening
+lincs_order              = 4               ; Highest order in the expansion of the constraint coupling matrix
+
+ns_type                  = grid            ; Method to determine neighbor list (simple, grid)
+nstlist                  = 10              ; Frequency to update the neighbor list
+rlist                    = 1.0             ; Cut-off for making neighbor list (short-range neighbor list cut-off) in nm
+rcoulomb                 = 1.0             ; Short-range electrostatic cut-off in nm
+rvdw                     = 1.0             ; Short-range Van der Waals cut-off in nm
+
+coulombtype              = PME             ; Particle Mesh Ewald for long-range electrostatics
+pme_order                = 4               ; Cubic interpolation
+fourierspacing           = 0.16            ; Grid spacing for FFT
+
+tcoupl                   = V-rescale       ; Modified Berendsen thermostat
+tc-grps                  = Protein Non-Protein ; Separate temperature coupling groups
+tau_t                    = 0.1   0.1       ; Time constant for coupling (ps)
+ref_t                    = 300   300       ; Reference temperature (K) for each group, should match your system temperature
+
+pcoupl                   = Parrinello-Rahman ; Pressure coupling on in NPT
+pcoupltype               = isotropic       ; Isotropic pressure coupling
+tau_p                    = 2.0             ; Time constant for coupling (ps)
+ref_p                    = 1.0             ; Reference pressure (bar)
+compressibility          = 4.5e-5          ; Isothermal compressibility of water (bar^-1)
+refcoord_scaling         = com             ; Scale reference coordinates for position restraints with the center of mass scaling
+
+pbc                      = xyz             ; Periodic Boundary Conditions in all 3 dimensions
+
+gen_vel                  = no              ; Velocity generation off as it is continued from NVT
+ 
