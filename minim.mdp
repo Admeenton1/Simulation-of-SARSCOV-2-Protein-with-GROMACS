@@ -1,0 +1,18 @@
+; minim.mdp - used as input into grompp for energy minimization
+
+integrator       = steep        ; Algorithm (steepest descent minimization)
+emtol            = 1000.0       ; Stop minimization when the maximum force < 1000.0 kJ/mol/nm
+emstep           = 0.01         ; Energy step size
+nsteps           = 50000        ; Maximum number of (minimization) steps to perform
+
+nstlist          = 1            ; Frequency to update the neighbor list
+ns_type          = grid         ; Method to determine neighbor list (simple, grid)
+rlist            = 1.0          ; Cut-off for making neighbor list (short-range neighbor list cut-off) in nm
+coulombtype      = PME          ; Particle Mesh Ewald for long-range electrostatics
+rcoulomb         = 1.0          ; Short-range electrostatic cut-off in nm
+rvdw             = 1.0          ; Short-range Van der Waals cut-off in nm
+
+pbc              = xyz          ; Periodic Boundary Conditions in all 3 dimensions
+
+; Options for energy monitoring
+energygrps       = System       ; Groups to write to energy file
